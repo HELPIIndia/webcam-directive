@@ -81,8 +81,12 @@ angular.module('webcam', [])
           if (navigator.mozGetUserMedia) {
             videoElem.mozSrcObject = stream;
           } else {
-            var vendorURL = window.URL || window.webkitURL;
-            videoElem.src = vendorURL.createObjectURL(stream);
+            try {
+              videoElem.srcObject = stream;
+            } catch (error) {
+              var vendorURL = window.URL || window.webkitURL;
+              videoElem.src = vendorURL.createObjectURL(stream);
+            }
           }
 
           /* Start playing the video to show the stream from the webcam */
